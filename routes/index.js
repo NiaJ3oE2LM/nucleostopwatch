@@ -28,14 +28,14 @@ router.get('/', function(req, res, next) {
     if(err) {
       return console.error('error fetching client from pool', err);
     }
-    client.query('SELECT *curl FROM products', function(err, result) {
+    client.query('SELECT * FROM bikes', function(err, result) {
       //call `done()` to release the client back to the pool
       done();
 
       if(err) {
         return console.error('error running query', err);
       }
-      console.log(result.rows[0]);
+      console.log(result.rows);
       //output: 1
     });
   });
