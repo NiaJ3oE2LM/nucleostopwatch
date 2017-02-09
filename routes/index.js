@@ -1,34 +1,15 @@
 var express = require('express');
 var router = express.Router();
-var pg = require('pg');
+var pool = require('../postgres.js')
 
-// create a config to configure both pooling behavior
-// and client options
-// note: all config is optional and the environment variables
-// will be read if the config is not present
-var config = {
-  user: 'test', //env var: PGUSER
-  database: 'mikwork', //env var: PGDATABASE
-  password: 'ciao', //env var: PGPASSWORD
-  host: 'localhost', // Server hosting the postgres database
-  port: 5432, //env var: PGPORT
-  max: 10, // max number of clients in the pool
-  idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
-};
-
-//this initializes a connection pool
-//it will keep idle connections open for a 30 seconds
-//and set a limit of maximum 10 idle clients
-var pool = new pg.Pool(config);
-
-/* GET home page. */
+// select from req.bosy.table
 router.get('/', function(req, res, next) {
-
   pool.connect(function(err, client, done) {
     if(err) {
       return console.error('error fetching client from pool', err);
     }
-    client.query('SELECT * FROM bikes', function(err, result) {
+    var query='SELECT * FROM '+req.body.table;
+    client.query(query, function(err, result) {
       //call `done()` to release the client back to the pool
       done();
 
@@ -47,9 +28,56 @@ router.get('/', function(req, res, next) {
     // between your application and the database, the database restarts, etc.
     // and so you might want to handle it and at least log it out
     console.error('idle client error', err.message, err.stack)
-  })
+  });
+  res.end();
+});
 
-  res.render('index', { title: 'Express' });
+//TODO insert new row into table
+router.post('/', function(req, res, next) {
+  pool.connect(function(err, client, done) {
+    if(err) {
+      return console.error('error fetching client from pool', err);
+    }
+    //var query= 'insert into'+req.body.table+'values'+req.body.values;
+    var query='SELECT * FROM '+req.body.table;
+    client.query(query, function(err, result) {
+      //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      console.log(result);
+      res.end(JSON.stringify(result.rows));
+    });
+  });
+  pool.on('error', function (err, client) {
+    console.error('idle client error', err.message, err.stack)
+  });
+  //res.end();
+});
+
+//TODO update values into row
+router.put('/', function(req, res, next) {
+  pool.connect(function(err, client, done) {
+    if(err) {
+      return console.error('error fetching client from pool', err);
+    }
+    var query= 'update';
+    client.query(query, function(err, result) {
+      //call `done()` to release the client back to the pool
+      done();
+
+      if(err) {
+        return console.error('error running query', err);
+      }
+      console.log(result);
+    });
+  });
+  pool.on('error', function (err, client) {
+    console.error('idle client error', err.message, err.stack)
+  });
+  res.end();
 });
 
 module.exports = router;
