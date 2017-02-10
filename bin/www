@@ -25,7 +25,7 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
- var hostname= '192.168.43.8'; //ip dell'host
+ var hostname= '192.168.50.214'; //ip dell'host
 
 server.listen(port, hostname);
 server.on('error', onError);
