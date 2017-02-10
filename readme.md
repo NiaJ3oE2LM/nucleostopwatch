@@ -5,6 +5,7 @@
 4. (opzionale) tabellone di gara realtime ottenuto con un raspberry in comunicazione con il server (url dedicato)
 
 ##cronometri nucleo
+* comunicazione seriale via bluetooth al pc server
 
 ##database postgres
 * salvataggio dei tempi gara
@@ -15,3 +16,9 @@
 * procedura di login per i dirigenti della gara
 * struttura semplice: html e bootstrap
 * gestione automatica risultati di gara
+
+##tabellone interattivo
+* visualizza lo stato della gara corrente
+* visulizza i team che stanno partecipando, l'ordine di partenza
+* visualizza messaggi di avviso per la chiamata dei team al banco gara (ad esempio per caricare i binari)
+* visualizza lo stato della gara
