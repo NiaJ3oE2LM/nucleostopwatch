@@ -20,5 +20,5 @@
 ##tabellone interattivo
 * visualizza lo stato della gara corrente
 * visulizza i team che stanno partecipando, l'ordine di partenza
-* visualizza messaggi di avviso per la chiamata dei team al banco gara (ad esempio per caricare i binari)
+* visualizza messaggi di avviso per la chiamata dei team al banco gara
 * visualizza lo stato della gara
