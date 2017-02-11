@@ -8,9 +8,6 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
-//launch serial
-var usb = require('./serial');
-
 var app = express();
 
 
