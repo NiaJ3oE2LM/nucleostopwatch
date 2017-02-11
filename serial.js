@@ -3,7 +3,6 @@
 var SerialPort = require('serialport');
 var db = require('./postgres');
 
-
 var port = new SerialPort('/dev/ttyACM0', {
   parser: SerialPort.parsers.readline('\n'),
   baudRate: 115200
@@ -15,7 +14,10 @@ var port = new SerialPort('/dev/ttyACM0', {
 });
 
 port.on('data', function (data) {
-  //create new line on register table with bikeId as paramete
+  //insert on current race table
   var req= JSON.parse (data);
-  console.log(req.laptime);
+  db.insertLap(req.race, req.laptime, function(err,query){
+    if(err) return console.error(err);
+    else return console.log(query);
+  });
 });

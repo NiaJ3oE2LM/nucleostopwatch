@@ -1,9 +1,5 @@
 var pg = require('pg');
 
-// create a config to configure both pooling behavior
-// and client options
-// note: all config is optional and the environment variables
-// will be read if the config is not present
 var config = {
   user: 'test', //env var: PGUSER
   database: 'mikwork', //env var: PGDATABASE
@@ -14,9 +10,35 @@ var config = {
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
 
-//this initializes a connection pool
-//it will keep idle connections open for a 30 seconds
-//and set a limit of maximum 10 idle clients
 var pool = new pg.Pool(config);
 
-module.exports = pool;
+exports.insertLap = function(race, laptime, callback){
+  pool.connect(function(err, client, done) {
+    if(err) callback(err, null);
+
+    //determina lo statp della gara
+    var query ="select team from current where race='"+race+"'";
+    client.query(query, function(err, res) {
+      //call `done()` to release the client back to the pool
+      done();
+      if(err) return callback(err, null);
+
+      //inserisci laptime nella tabella gara corrispondente
+      else{
+        query='INSERT INTO '+race+'(team, laptime) VALUES (\''+res.rows[0].team+'\','+laptime+')';
+        client.query(query, function(err, result) {
+          //call `done()` to release the client back to the pool
+          done();
+          if(err) return callback(err, null);
+          else return callback(null, query);
+        });
+      }
+
+    });
+  });
+  pool.on('error', function (err, client) {
+    console.error('idle client error', err.message, err.stack)
+  });
+}
+
+//module.exports = pool;
