@@ -16,7 +16,7 @@ var port = new SerialPort('/dev/ttyACM0', {
 port.on('data', function (data) {
   //insert on current race table
   var req= JSON.parse (data);
-  db.insertLap(req.race, req.laptime, function(err,query){
+  db.insertLap(req.tavolo, req.laptime, function(err,query){
     if(err) return console.error(err);
     else return console.log(query);
   });

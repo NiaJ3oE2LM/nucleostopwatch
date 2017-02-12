@@ -10,6 +10,7 @@ var users = require('./routes/users');
 
 var app = express();
 
+var usb = require('./cronometro/serial');
 
 
 // view engine setup

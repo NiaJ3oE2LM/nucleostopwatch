@@ -1,9 +1,9 @@
 var pg = require('pg');
 
 var config = {
-  user: 'test', //env var: PGUSER
+  user: 'cronometro', //env var: PGUSER
   database: 'mikwork', //env var: PGDATABASE
-  password: 'ciao', //env var: PGPASSWORD
+  password: 'roboval', //env var: PGPASSWORD
   host: 'localhost', // Server hosting the postgres database
   port: 5432, //env var: PGPORT
   max: 10, // max number of clients in the pool
@@ -12,20 +12,25 @@ var config = {
 
 var pool = new pg.Pool(config);
 
-exports.insertLap = function(race, laptime, callback){
+pool.on('error', function (err, client) {
+  console.error('idle client error', err.message, err.stack)
+});
+
+exports.insertLap = function(tavolo, laptime, callback){
   pool.connect(function(err, client, done) {
     if(err) callback(err, null);
 
-    //determina lo statp della gara
-    var query ="select team from current where race='"+race+"'";
+    //determina la gara corrente nel tavolo
+    var query ="select race,team from current where tavolo='"+tavolo+"'";
     client.query(query, function(err, res) {
       //call `done()` to release the client back to the pool
       done();
       if(err) return callback(err, null);
-
+      //controlla se c'è una gara
+      else if(res.rowCount==0) return console.log("no race at table: "+tavolo);
       //inserisci laptime nella tabella gara corrispondente
       else{
-        query='INSERT INTO '+race+'(team, laptime) VALUES (\''+res.rows[0].team+'\','+laptime+')';
+        query='update '+res.rows[0].race+' set laptime ='+laptime+' where team =\''+res.rows[0].team+'\'';
         client.query(query, function(err, result) {
           //call `done()` to release the client back to the pool
           done();
@@ -36,9 +41,4 @@ exports.insertLap = function(race, laptime, callback){
 
     });
   });
-  pool.on('error', function (err, client) {
-    console.error('idle client error', err.message, err.stack)
-  });
 }
-
-//module.exports = pool;
