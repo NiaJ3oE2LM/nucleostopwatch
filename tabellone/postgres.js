@@ -24,7 +24,7 @@ exports.select = function(table,callback){
       //call `done()` to release the client back to the pool
       done();
       if(err) return callback(err, null);
-      else return callback(null, res.rows[]);
+      else return callback(null, res.rows);
     });
   });
 }

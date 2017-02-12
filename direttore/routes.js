@@ -1,9 +1,9 @@
 var express = require('express');
-var router = express.Router();
+var router = express.Router();;
 
-/* GET users listing. */
+// select from req.bosy.table
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.send("direttore");
 });
 
 module.exports = router;
