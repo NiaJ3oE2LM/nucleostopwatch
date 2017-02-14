@@ -3,7 +3,7 @@ var router = express.Router();;
 
 // select from req.bosy.table
 router.get('/', function(req, res, next) {
-  res.send("direttore");
+  res.render("direttore");
 });
 
 module.exports = router;
