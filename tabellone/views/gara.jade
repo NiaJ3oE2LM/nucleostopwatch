@@ -1,0 +1,70 @@
+script(src='/public/socket.io.min.js')
+script.
+  var socket = io();
+
+table(width="100%", height="100%", border="1")
+  tr(height="10%")
+    td velocità
+    td labirinto
+  tr
+    td 
+      table(class="tavolo",id="tav1",border="2")
+        tr
+          td(colspan="2")
+            |tavolo
+        tr
+          td
+            |now
+          td
+            |team1
+        tr
+          td
+            |next
+          td
+            |team2
+      table(class="tavolo",id="tav2",border="2")
+        tr
+          td(colspan="2")
+            |tavolo
+        tr
+          td
+            |now
+          td
+            |team1
+        tr
+          td
+            |next
+          td
+            |team2
+    td
+      table(class="tavolo",id="tav2",border="2")
+        tr
+          td(colspan="2")
+            |tavolo
+        tr
+          td
+            |now
+          td
+            |team1
+        tr
+          td
+            |next
+          td
+            |team2
+      table(class="tavolo",id="tav1",border="2")
+        tr
+          td(colspan="2")
+            |tavolo
+        tr
+          td
+            |now
+          td
+            |team1
+        tr
+          td
+            |next
+          td
+            |team2
+  tr(height="5%")
+    td(colspan="2")
+    

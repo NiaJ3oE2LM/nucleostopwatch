@@ -1,0 +1,43 @@
+script(src='/public/socket.io.min.js')
+script.
+  var socket = io();
+  
+table(width="100%",height="100%", border="2")
+  tr
+    td
+      h1 nuovo team 
+      table(border="2")
+        tr
+          td
+            |nome
+          td
+            input
+        tr
+          td
+            |scuola
+          td
+            input
+        tr
+          td
+            |membri
+          td
+            input
+    td 
+      h1 registrazione gara
+      table(border="2")
+        tr
+          td gara
+          td
+            input
+        tr
+          td
+            |tema
+          td
+            input
+  tr
+    td 
+      button registra 
+    td
+      div(width="200",height="200",border="2")
+        |drop binery here
+      button carica 
