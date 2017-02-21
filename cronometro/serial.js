@@ -1,5 +1,7 @@
 //TODO should be BLE 4.0
 
+var ble = require('./noble');
+
 var SerialPort = require('serialport');
 var db = require('./postgres');
 

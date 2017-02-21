@@ -5,7 +5,7 @@ GRANT CONNECT ON DATABASE mydb TO xxx;
 -- This assumes you're actually connected to mydb..
 GRANT USAGE ON SCHEMA public TO xxx;
 GRANT SELECT ON mytable TO xxx;
-NT USAGE, SELECT ON SEQUENCE cities_id_seq TO www;
+GRANT USAGE, SELECT ON SEQUENCE cities_id_seq TO www;
 
 * le app di tabellone e direttore devono esportare dei metodi per essere aggiornate in tempo reale attraverso il websocket
 
