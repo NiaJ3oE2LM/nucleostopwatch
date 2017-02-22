@@ -4,5 +4,6 @@ var direttore = require('./direttore');
 var tabellone = require('./tabellone');
 var collaboratore = require('./collaboratore');
 var usb = require('../cronometro/serial');
+var ble = require('../cronometro/example');
 
 console.log("server avviato");
