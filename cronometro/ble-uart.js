@@ -1,4 +1,4 @@
-
+//TODO togliere i log
 /*
 Noble UART service example
 
@@ -31,21 +31,6 @@ var knownUartServices = {
     serviceUUID: '6e400001-b5a3-f393-e0a9-e50e24dcca9e',
     txUUID: '6e400002-b5a3-f393-e0a9-e50e24dcca9e',
     rxUUID: '6e400003-b5a3-f393-e0a9-e50e24dcca9e'
-  },
-  redbear: {
-    serviceUUID: '713d0000-503e-4c75-ba94-3148f18d941e',
-    txUUID: '713d0003-503e-4c75-ba94-3148f18d941e',
-    rxUUID: '713d0002-503e-4c75-ba94-3148f18d941e'
-  },
-  laird: {
-    serviceUUID: '569a1101-b87f-490c-92cb-11ba5ea5167c',
-    txUUID: '569a2001-b87f-490c-92cb-11ba5ea5167c',
-    rxUUID: '569a2000-b87f-490c-92cb-11ba5ea5167c'
-  },
-  bluegiga: {
-    serviceUUID: '1d5688de-866d-3aa4-ec46-a1bddb37ecf6',
-    txUUID: 'af20fbac-2518-4998-9af7-af42540731b3',
-    rxUUID: 'af20fbac-2518-4998-9af7-af42540731b3'
   }
 };
 

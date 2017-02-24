@@ -42,3 +42,36 @@ exports.insertLap = function(tavolo, laptime, callback){
     });
   });
 }
+
+exports.getCurrent = function(tavolo, callback){
+  pool.connect(function(err, client, done) {
+    if(err) callback(err, null);
+
+    //determina la gara corrente nel tavolo
+    var query ="select race,team from current where tavolo='"+tavolo+"'";
+    client.query(query, function(err, res) {
+      //call `done()` to release the client back to the pool
+      done();
+      if(err) return callback(err, null);
+      else return callback(null, res);
+
+    });
+  });
+}
+
+//inserisce il parziale prima d i inviarlo al socket nella tabella current
+exports.inserisciParziale = function(tavolo, parziale, callback){
+  pool.connect(function(err, client, done) {
+    if(err) callback(err, null);
+
+    //determina la gara corrente nel tavolo
+    var query ="update current set parziale = "+parziale+" where tavolo = '"+tavolo+"'";
+    client.query(query, function(err, res) {
+      //call `done()` to release the client back to the pool
+      done();
+      if(err) return callback(err, null);
+      else return callback(null, res);
+    });
+
+    });
+}
