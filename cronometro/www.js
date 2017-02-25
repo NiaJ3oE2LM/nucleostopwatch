@@ -1,6 +1,7 @@
-var app = require('../cronometro/app');
+var app = require('./app');
 var debug = require('debug')('psql-basic:server');
 var http = require('http');
+var db = require('./postgres');
 
 
 /**
@@ -16,16 +17,26 @@ app.set('port', port);
 
 var server = http.createServer(app);
 var io = require('socket.io')(server);
+
 io.on('connection', function(socket){
   console.log("cronometro connesso");
+
+  socket.on('inserisci record', function(data){
+    db.inserisciRecord(data.gara, data.team, data.timelap, function(err, check){
+      if(err) return console.error(err);
+      else return console.log("DAtabase aggiornato :", check);
+    });
+  });
 });
+
+
 /**
  * Listen on provided port, on all network interfaces.
  */
 
- var hostname= '192.168.50.214'; //ip dell'host
+ var hostname= '192.168.0.110'; //ip dell'host
 
-server.listen(port);
+server.listen(port, hostname);
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -90,6 +101,12 @@ function onListening() {
 }
 
 exports.sendData = function(gara, tavolo, team, timelap){
-  console.log("SOckets",io.sockets);
-  //todo invia data al socket e asoetta la conferma
+  var data ={
+    tavolo: tavolo,
+    team: team,
+    timelap: timelap,
+    gara: gara
+  }
+  io.sockets.emit('parziale', data);
 }
+;

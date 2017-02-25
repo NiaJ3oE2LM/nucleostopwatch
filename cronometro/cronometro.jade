@@ -1,10 +1,36 @@
+script(src='/public/socket.io.min.js')
+script.
+  var socket = io();
+  socket.on('parziale', function(msg){
+    //TODO aggiorna dati input
+    if(confirm("nuovo parziale in arrivo, dimenticare i dati correnti?")){
+      document.getElementById("team").value = msg.team;
+      document.getElementById("gara").value = msg.gara;
+      document.getElementById("timelap").value = msg.timelap;
+      document.getElementById("tavolo").value = msg.tavolo;
+    }
+  });
+  function carica(){
+    var data ={
+      tavolo: document.getElementById("tavolo").value,
+      team: document.getElementById("team").value,
+      timelap: document.getElementById("timelap").value,
+      gara: document.getElementById("gara").value
+    }
+    socket.emit('inserisci record', data);
+    //pulisci form
+    //TODO inserisci dati prossimo concorrente
+    document.getElementById("form").reset();
+  }
 h1 modulo controllo gara
 h2 tavolo
-input
+input(readonly)#tavolo
 h2 gara
-input
-h2 team
-input
-h2 laptime
-input
-button(value="conferma e carica")
+input(readonly)#gara
+form#form
+  h2 team
+  input#team
+  h2 timelap
+  input#timelap
+p
+  button(onclick="carica()") conferma e carica

@@ -127,7 +127,7 @@ var BleUart = function (name, options) {
 
         characteristics.forEach(function(characteristic) {
           if (characteristic.uuid === receiveUUID) {
-            console.log("CAratteristica",characteristic.toString());
+            //console.log("CAratteristica",characteristic.toString());
             receive = characteristic;
 
             if (characteristic.properties.indexOf("notify") < 0) {
@@ -136,7 +136,7 @@ var BleUart = function (name, options) {
             receive.notify(true);  // turn on notifications
 
             receive.on('data', function(data, notification) {
-              console.log("ARrivato",data, notification);
+              //console.log("ARrivato",data, notification);
 
               if (notification) {   // if you got a notification
                 self.emit('data', data);  // emit a data event

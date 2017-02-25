@@ -16,39 +16,12 @@ pool.on('error', function (err, client) {
   console.error('idle client error', err.message, err.stack)
 });
 
-exports.insertLap = function(tavolo, laptime, callback){
-  pool.connect(function(err, client, done) {
-    if(err) callback(err, null);
-
-    //determina la gara corrente nel tavolo
-    var query ="select race,team from current where tavolo='"+tavolo+"'";
-    client.query(query, function(err, res) {
-      //call `done()` to release the client back to the pool
-      done();
-      if(err) return callback(err, null);
-      //controlla se c'è una gara
-      else if(res.rowCount==0) return console.log("no race at table: "+tavolo);
-      //inserisci laptime nella tabella gara corrispondente
-      else{
-        query='update '+res.rows[0].race+' set laptime ='+laptime+' where team =\''+res.rows[0].team+'\'';
-        client.query(query, function(err, result) {
-          //call `done()` to release the client back to the pool
-          done();
-          if(err) return callback(err, null);
-          else return callback(null, query);
-        });
-      }
-
-    });
-  });
-}
-
 exports.getCurrent = function(tavolo, callback){
   pool.connect(function(err, client, done) {
     if(err) callback(err, null);
 
     //determina la gara corrente nel tavolo
-    var query ="select race,team from current where tavolo='"+tavolo+"'";
+    var query ="select gara,team from current where tavolo='"+tavolo+"'";
     client.query(query, function(err, res) {
       //call `done()` to release the client back to the pool
       done();
@@ -66,6 +39,22 @@ exports.inserisciParziale = function(tavolo, parziale, callback){
 
     //determina la gara corrente nel tavolo
     var query ="update current set parziale = "+parziale+" where tavolo = '"+tavolo+"'";
+    client.query(query, function(err, res) {
+      //call `done()` to release the client back to the pool
+      done();
+      if(err) return callback(err, null);
+      else return callback(null, res);
+    });
+
+    });
+}
+
+exports.inserisciRecord = function(gara, team, timelap, callback){
+  pool.connect(function(err, client, done) {
+    if(err) callback(err, null);
+
+    //determina la gara corrente nel tavolo
+    var query ="update "+gara+" set timelap = "+timelap+" where team = '"+team+"'";
     client.query(query, function(err, res) {
       //call `done()` to release the client back to the pool
       done();

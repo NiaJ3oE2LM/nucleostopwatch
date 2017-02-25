@@ -3,20 +3,21 @@ var BleUart = require('./ble-uart');
 // use a predefined UART service (nordic, redbear, laird, bluegiga)
 var bleSerial = new BleUart('nordic');
 var db = require('./postgres');
-var io = require('../bin/cronometro');
+var io = require('./www');
 
 // this function gets called when new data is received from
 // the Bluetooth LE serial service:
 bleSerial.on('data', function(rawdata){
-  var data = JSON.parse (rawdata);
+  var bledata = JSON.parse (rawdata);
   //IDEA salva il tempo provvisorio sulla tabella current in caso di blackout
-  console.log("laptime", data.timelap);
+  //console.log("timelap", bledata.timelap);
   //TODO ricavare il tavolo dal nome del dispositivo ble che esegue la richiesta
   db.getCurrent("tav1", function(err, res){
      if (err) return console.error(err);
      else{
-       console.log(res.rows);
-       io.sendData("speed1","tav1", "mark1", 1234);
+       var dbdata= res.rows[0];
+       console.log(dbdata);
+       io.sendData(dbdata.gara,"tav1", dbdata.team, bledata.timelap);
      }
   });
 });
