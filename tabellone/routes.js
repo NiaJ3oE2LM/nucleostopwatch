@@ -3,10 +3,10 @@ var router = express.Router();;
 
 // select from req.bosy.table
 router.get('/programma', function(req, res, next) {
-  res.render('programma');
+  res.render(__dirname+"/views/programma");
 })
 .get('/gara', function(req, res, next) {
-  res.render('gara');
+  res.render(__dirname+"/views/gara");
 });
 
 module.exports = router;

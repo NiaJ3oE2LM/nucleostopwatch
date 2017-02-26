@@ -1,4 +1,4 @@
-var app = require('../tabellone/app');
+var app = require('../app');
 var debug = require('debug')('psql-basic:server');
 var http = require('http');
 
@@ -7,7 +7,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3001');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
@@ -15,17 +15,15 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-var io = require('socket.io')(server);
-io.on('connection', function(socket){
-  console.log("tabellone connesso");
-});
+
+
 /**
  * Listen on provided port, on all network interfaces.
  */
 
- var hostname= '192.168.50.214'; //ip dell'host
+ var hostname= '192.168.0.110'; //ip dell'host
 
-server.listen(port);
+server.listen(port, hostname);
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -88,3 +86,5 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+module.exports = server;

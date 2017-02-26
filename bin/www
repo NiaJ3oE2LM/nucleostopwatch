@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
-var direttore = require('./direttore');
-var tabellone = require('./tabellone');
-var collaboratore = require('./collaboratore');
-var cronometro = require('../cronometro/www');
 var usb = require('../cronometro/serial');
 var ble = require('../cronometro/noble');
 
-console.log("server avviato");
+var server = require('./server');
+var socket = require('./socket');
+
+console.log("sistema avviato");

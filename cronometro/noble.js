@@ -3,7 +3,7 @@ var BleUart = require('./ble-uart');
 // use a predefined UART service (nordic, redbear, laird, bluegiga)
 var bleSerial = new BleUart('nordic');
 var db = require('./postgres');
-var io = require('./www');
+var socket = require('../bin/socket');
 
 // this function gets called when new data is received from
 // the Bluetooth LE serial service:
@@ -17,7 +17,7 @@ bleSerial.on('data', function(rawdata){
      else{
        var dbdata= res.rows[0];
        console.log(dbdata);
-       io.sendData(dbdata.gara,"tav1", dbdata.team, bledata.timelap);
+       socket.sendData(dbdata.gara,"tav1", dbdata.team, bledata.timelap);
      }
   });
 });
