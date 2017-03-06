@@ -16,7 +16,7 @@ pool.on('error', function (err, client) {
   console.error('idle client error', err.message, err.stack)
 });
 
-exports.getCurrent = function(tavolo, callback){
+exports.getCurrentGaraTeam = function(tavolo, callback){
   pool.connect(function(err, client, done) {
     if(err) callback(err, null);
 

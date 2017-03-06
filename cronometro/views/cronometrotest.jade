@@ -1,0 +1,95 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=Edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title Carica dati
+    link(rel='stylesheet', type='text/css', href='./public/jquery-ui.css')
+    link(rel='stylesheet', type='text/css', href='./public/bootstrap.css')
+    link(rel='stylesheet', type='text/css', href='./public/font-awesome.css')
+    script(src='./public/jquery.min.js')
+    script(src='./public/bootstrap.min.js')
+  body
+    nav.navbar.navbar-default.white(role='navigation')
+      // Brand and toggle get grouped for better mobile display
+      .navbar-header
+        button.navbar-toggle(data-toggle='collapse', data-target='#navbar')
+          // quando lo schermo si restringe compare il pulsante
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href='#')
+          img(src='./public/roboval.png', alt='roboval')
+      #navbar.navbar-collapse.collapse
+        ul.nav.navbar-nav
+          li
+            a(href='./index.html') Home
+          li
+            a(href='./cronometro.html') Carica tempi
+          li
+            a(href='#') Un'altra pagina
+    .container(align='center')
+      h2(align='center') Carica Tempi Gare
+      br
+      br
+      .panel-group
+        .panel.panel-primary(style='width:60%;')
+          .panel-heading
+            h4 Gara
+          .panel-body
+            form.form
+              input#gara.form-control(placeholder='gara', style='width:50%')
+        .panel.panel-primary(style='width:60%;')
+          .panel-heading
+            h4 Tavolo
+          .panel-body
+            form.form
+              input#tavolo.form-control(placeholder='Tavolo', style='width:50%')
+        .panel.panel-primary(style='width:60%;')
+          .panel-heading
+            h4 Squadra
+          .panel-body
+            form.form
+              input#team.form-control(placeholder='Squadra', style='width:50%')
+        .panel.panel-primary(style='width:60%;')
+          .panel-heading
+            h4 Tempo
+          .panel-body
+            form.form
+              input#timelap.form-control(placeholder='Tempo', style='width:50%')
+      button#confirm.btn.btn-primary(type='button') Conferma e Carica
+  script(src='./public/socket.io.min.js')
+  script.
+    $(document).ready(function(){
+    //var socket = io();
+    //quando premo il pulsante carica
+    $("#confirm").on("click", function(){
+    var data ={
+    tavolo: document.getElementById("tavolo").value,
+    team: document.getElementById("team").value,
+    timelap: document.getElementById("timelap").value,
+    gara: document.getElementById("gara").value
+    }
+    //socket.emit('inserisci record', data);
+    //pulisci form
+    //TODO inserisci dati prossimo concorrente
+    $("input").val('')
+    $("#confirm").addClass("btn btn-success").html("Caricato");
+    setTimeout(
+    function()
+    {
+    window.location.href = "./index.html";
+    }, 3500)
+    });
+    //socket.on('parziale', function(msg){
+    //TODO aggiorna dati input
+    //if(confirm("nuovo parziale in arrivo, dimenticare i dati correnti?")){
+    //document.getElementById("team").value = msg.team;
+    //document.getElementById("gara").value = msg.gara;
+    //document.getElementById("timelap").value = msg.timelap;
+    //document.getElementById("tavolo").value = msg.tavolo;
+    //}
+    //});
+    });

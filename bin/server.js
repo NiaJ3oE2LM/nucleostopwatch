@@ -23,7 +23,7 @@ var server = http.createServer(app);
 
  var hostname= '192.168.0.110'; //ip dell'host
 
-server.listen(port, hostname);
+server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 

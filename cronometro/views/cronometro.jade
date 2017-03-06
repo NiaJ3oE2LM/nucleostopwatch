@@ -1,6 +1,6 @@
 script(src='/public/socket.io.min.js')
 script.
-  var socket = io();
+  var socket = io('/cronometro');
   socket.on('parziale', function(msg){
     //TODO aggiorna dati input
     if(confirm("nuovo parziale in arrivo, dimenticare i dati correnti?")){

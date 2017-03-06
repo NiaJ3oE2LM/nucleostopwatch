@@ -12,12 +12,18 @@ bleSerial.on('data', function(rawdata){
   //IDEA salva il tempo provvisorio sulla tabella current in caso di blackout
   //console.log("timelap", bledata.timelap);
   //TODO ricavare il tavolo dal nome del dispositivo ble che esegue la richiesta
-  db.getCurrent("tav1", function(err, res){
+  db.getCurrentGaraTeam("tav1", function(err, res){
      if (err) return console.error(err);
      else{
        var dbdata= res.rows[0];
        console.log(dbdata);
+
        socket.sendData(dbdata.gara,"tav1", dbdata.team, bledata.timelap);
+
+       db.inserisciParziale("tav1", bledata.timelap, function(err, res2){
+         if(err) return console.error(err);
+         else return console.log("current aggiornato");
+       });
      }
   });
 });
