@@ -8,11 +8,12 @@ var bodyParser = require('body-parser');
 var publicroute = require('./publicroute');
 var direttore = require('./direttore/routes');
 var tabellone = require('./tabellone/routes');
-var collaboratore = require('./collaboratore/routes');
+var collaboratore = require('./registrazione/routes');
 var cronometro = require('./cronometro/routes');
 
 var app = express();
 
+//TODO sustemare collavoratore in registrazione
 
 // view engine setup
 //app.set('views', __dirname); //impostato nei singoli router
